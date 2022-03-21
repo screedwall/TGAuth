@@ -9,11 +9,22 @@ namespace TGAuth
         TcpClient client;
         public Client(string hostname, int port)
         {
-            client = new TcpClient(hostname, port);
+            try
+            {
+                client = new TcpClient(hostname, port);
+            } catch
+            {
+                client = null;
+                MessageBox.Show("Ошибка соединения с сервером", "Ошибка", MessageBoxButtons.OK);
+            }
         }
 
         public JsonMsg send(string msg)
         {
+            if (client == null)
+            {
+                return null;
+            }
             //---data to send to the server---
             NetworkStream nwStream = client.GetStream();
             byte[] bytesToSend = Encoding.UTF8.GetBytes(msg);

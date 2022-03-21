@@ -63,7 +63,6 @@
             this.username_tb.Name = "username_tb";
             this.username_tb.Size = new System.Drawing.Size(312, 39);
             this.username_tb.TabIndex = 2;
-            this.username_tb.TextChanged += new System.EventHandler(this.username_tb_TextChanged);
             // 
             // password_tb
             // 
@@ -71,7 +70,6 @@
             this.password_tb.Name = "password_tb";
             this.password_tb.Size = new System.Drawing.Size(312, 39);
             this.password_tb.TabIndex = 3;
-            this.password_tb.TextChanged += new System.EventHandler(this.password_tb_TextChanged);
             // 
             // login_btn
             // 

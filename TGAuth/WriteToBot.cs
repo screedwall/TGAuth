@@ -32,15 +32,18 @@ namespace TGAuth
             Client client = new Client("localhost", 80);
             JsonMsg res = client.send(msg.ToJson());
 
-            if (res.status == Response.OK)
+            if (res != null)
             {
-                MessageBox.Show("Пользователь успешно зарегистрирован!", "Успешно", MessageBoxButtons.OK);
-                Close();
-            }
-            else
-            {
-                MessageBox.Show("Такой пользователь уже зарегистрирован!", "Ошибка", MessageBoxButtons.OK);
-                Close();
+                if (res.status == Response.OK)
+                {
+                    MessageBox.Show("Пользователь успешно зарегистрирован!", "Успешно", MessageBoxButtons.OK);
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Такой пользователь уже зарегистрирован!", "Ошибка", MessageBoxButtons.OK);
+                    Close();
+                }
             }
         }
     }

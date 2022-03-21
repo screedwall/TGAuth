@@ -21,11 +21,17 @@
             Client client = new Client("localhost", 80);
             JsonMsg res = client.send(msg.ToJson());
 
-            if (res.status == Response.OK) {
-                this.Close();
-                MessageBox.Show("Вы успешно вошли!", "LogIn", MessageBoxButtons.OK);
-            } else {
-                MessageBox.Show("Неверный код!", "Error", MessageBoxButtons.OK);
+            if (res != null)
+            {
+                if (res.status == Response.OK)
+                {
+                    this.Close();
+                    MessageBox.Show("Вы успешно вошли!", "LogIn", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    MessageBox.Show("Неверный код!", "Error", MessageBoxButtons.OK);
+                }
             }
         }
     }

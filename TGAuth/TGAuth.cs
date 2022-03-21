@@ -19,12 +19,17 @@ namespace TGAuth
             Client client = new Client("localhost", 80);
             JsonMsg res = client.send(msg.ToJson());
 
-            if (res.status == Response.OK)
+            if (res != null)
             {
-                _2FA twoFactor = new _2FA(username_tb.Text.ToLower());
-                twoFactor.Show();
-            } else {
-                MessageBox.Show("Такой пользователь не зарегистрирован!", "Ошибка", MessageBoxButtons.OK);
+                if (res.status == Response.OK)
+                {
+                    _2FA twoFactor = new _2FA(username_tb.Text.ToLower());
+                    twoFactor.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Такой пользователь не зарегистрирован!", "Ошибка", MessageBoxButtons.OK);
+                }
             }
         }
 
@@ -39,15 +44,6 @@ namespace TGAuth
                 WriteToBot writeToBotForm = new WriteToBot(username_tb.Text.ToLower(), password_tb.Text);
                 writeToBotForm.Show();
             }
-        }
-
-        private void username_tb_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void password_tb_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
