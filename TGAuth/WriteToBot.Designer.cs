@@ -63,7 +63,6 @@
             this.chatId_tb.Name = "chatId_tb";
             this.chatId_tb.Size = new System.Drawing.Size(291, 39);
             this.chatId_tb.TabIndex = 2;
-            this.chatId_tb.TextChanged += new System.EventHandler(this.chatId_tb_TextChanged);
             // 
             // label2
             // 
