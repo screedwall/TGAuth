@@ -1,5 +1,6 @@
 ﻿namespace TGAuth
 {
+    //типы операций
     public enum OperTypes
     {
         login,
@@ -7,6 +8,7 @@
         checkCode
     }
 
+    //коды ответа
     public enum Response
     {
         OK,

@@ -18,11 +18,13 @@ namespace TGAuth
             this.status = Response.ERROR;
         }
 
+        //конвертация из объекта в строку
         public string ToJson()
         {
             return JsonConvert.SerializeObject(this);
         }
 
+        //конвертация из строки в объект
         public static JsonMsg ToObj(string json)
         {
             return JsonConvert.DeserializeObject<JsonMsg>(json);
