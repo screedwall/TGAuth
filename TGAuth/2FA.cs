@@ -2,28 +2,38 @@
 {
     public partial class _2FA : Form
     {
-        string code;
-        public _2FA(string code)
+        DBase db;
+        string username;
+        public _2FA(string username, DBase db)
         {
-            this.code = code;
             InitializeComponent();
+            this.username = username;
+            this.db = db;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == code) {
-                this.Close();
-                MessageBox.Show("Вы успешно вошли!", "LogIn", MessageBoxButtons.OK);
+            if (textBox1.TextLength == 0)
+            {
+                MessageBox.Show("Не заполнен код", "Ошибка", MessageBoxButtons.OK);
+                return;
             }
-            else
+            List<IDictionary<string, string>> sqlResponse = db.Select(String.Format("SELECT * " +
+                                                              "FROM codes " +
+                                                              "INNER JOIN users " +
+                                                              "ON codes.user_id = users.id " +
+                                                              "WHERE users.username = '{0}' " +
+                                                              "AND codes.code = {1}", username, textBox1.Text));
+            //если код введен не правильно
+            if (sqlResponse.Count == 0)
             {
                 MessageBox.Show("Неверный код!", "Error", MessageBoxButtons.OK);
             }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
+            else
+            {
+                this.Close();
+                MessageBox.Show("Вы успешно вошли!", "LogIn", MessageBoxButtons.OK);
+            }
         }
     }
 }
