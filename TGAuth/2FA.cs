@@ -3,39 +3,29 @@
     public partial class _2FA : Form
     {
         string username;
+        Settings_t settings;
 
-        public _2FA(string username)
+        public _2FA(string username, Settings_t settings)
         {
             this.username = username;
+            this.settings = settings;
             InitializeComponent();
         }
 
         //обработчик кнопки "проверить"
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            //создаём пустой список параметров для отправки на сервер
-            List<IDictionary<string, string>> args = new List<IDictionary<string, string>>();
-            //создаём пустой параметр
-            IDictionary<string, string> arg = new Dictionary<string, string>();
-            //заполняем логин
-            arg["username"] = username;
-            //заполняем код
-            arg["code"] = textBox1.Text;
-            //добавляем параметр в список
-            args.Add(arg);
-            //создаём сообщение
-            JsonMsg msg = new JsonMsg(OperTypes.checkCode, args);
+            IDictionary<string, string> request = new Dictionary<string, string>();
+            request["username"] = username;
+            request["code"] = textBox1.Text;
 
-            //подключение к серверу
-            Client client = new Client("localhost", 80);
-            //отправка сообщения и ожидание результата
-            JsonMsg res = client.send(msg.ToJson());
+            var res = await Client.sendRequest(settings.ip, settings.port, OperTypes.checkCode, request);
 
             //если сервер прислал ответ
             if (res != null)
             {
                 //если статус ответа ок
-                if (res.status == Response.OK)
+                if (res == Response.OK.ToString())
                 {
                     //закрываем форму
                     this.Close();

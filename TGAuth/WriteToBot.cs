@@ -6,12 +6,14 @@ namespace TGAuth
     {
         string username;
         string password;
+        Settings_t settings;
 
-        public WriteToBot(string username, string password)
+        public WriteToBot(string username, string password, Settings_t settings)
         {
             InitializeComponent();
             this.username = username;
             this.password = password;
+            this.settings = settings;
         }
 
         //обработчик нажатия на ссылку
@@ -21,33 +23,20 @@ namespace TGAuth
         }
 
         //обработчик кнопки "подтвердить"
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            //создаём пустой список параметров для отправки на сервер
-            List<IDictionary<string, string>> args = new List<IDictionary<string, string>>();
-            //создаём пустой параметр
-            IDictionary<string, string> arg = new Dictionary<string, string>();
-            //заполняем логин
-            arg["username"] = username;
-            //заполняем пароль
-            arg["password"] = password;
-            //заполняем telegram id
-            arg["chatId"] = chatId_tb.Text;
-            //добавляем параметр в список
-            args.Add(arg);
-            //создаём сообщение
-            JsonMsg msg = new JsonMsg(OperTypes.register, args);
+            IDictionary<string, string> request = new Dictionary<string, string>();
+            request["username"] = username;
+            request["password"] = password;
+            request["telegram_id"] = chatId_tb.Text;
 
-            //подключение к серверу
-            Client client = new Client("localhost", 80);
-            //отправка сообщения и ожидание результата
-            JsonMsg res = client.send(msg.ToJson());
+            var res = await Client.sendRequest(settings.ip, settings.port, OperTypes.register, request);
 
             //если сервер прислал ответ
             if (res != null)
             {
                 //если статус ответа ок
-                if (res.status == Response.OK)
+                if (res == Response.OK.ToString())
                 {
                     MessageBox.Show("Пользователь успешно зарегистрирован!", "Успешно", MessageBoxButtons.OK);
                     Close();

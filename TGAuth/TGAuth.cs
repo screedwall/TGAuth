@@ -2,40 +2,28 @@ namespace TGAuth
 {
     public partial class TGAuth : Form
     {
+        static public Settings_t settings = new Settings_t();
         public TGAuth()
         {
             InitializeComponent();
         }
 
         //обработчик кнопки "вход"
-        private void login_btn_Click(object sender, EventArgs e)
+        private async void login_btn_Click(object sender, EventArgs e)
         {
-            //создаём пустой список параметров для отправки на сервер
-            List<IDictionary<string, string>>  args = new List<IDictionary<string, string>>();
-            //создаём пустой параметр
-            IDictionary<string, string> arg = new Dictionary<string, string>();
-            //заполняем логин
-            arg["username"] = username_tb.Text.ToLower();
-            //заполняем пароль
-            arg["password"] = password_tb.Text;
-            //добавляем параметр в список
-            args.Add(arg);
-            //создаём сообщение
-            JsonMsg msg = new JsonMsg(OperTypes.login, args);
+            IDictionary<string, string> request = new Dictionary<string, string>();
+            request["username"] = username_tb.Text;
+            request["password"] = password_tb.Text;
 
-            //подключение к серверу
-            Client client = new Client("localhost", 80);
-            //отправка сообщения и ожидание результата
-            JsonMsg res = client.send(msg.ToJson());
+            var res = await Client.sendRequest(settings.ip, settings.port, OperTypes.login, request);
 
-            //если сервер прислал ответ
             if (res != null)
             {
                 //если статус ответа ок
-                if (res.status == Response.OK)
+                if (res == Response.OK.ToString())
                 {
                     //инициализация формы
-                    _2FA twoFactor = new _2FA(username_tb.Text.ToLower());
+                    _2FA twoFactor = new _2FA(username_tb.Text, settings);
                     twoFactor.Show();
                 }
                 else
@@ -56,9 +44,15 @@ namespace TGAuth
             else
             {
                 //инициализация формы
-                WriteToBot writeToBotForm = new WriteToBot(username_tb.Text.ToLower(), password_tb.Text);
+                WriteToBot writeToBotForm = new WriteToBot(username_tb.Text, password_tb.Text, settings);
                 writeToBotForm.Show();
             }
+        }
+
+        private void settings_btn_Click(object sender, EventArgs e)
+        {
+            Settings settingsForm = new Settings();
+            settingsForm.Show();
         }
     }
 }
