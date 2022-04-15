@@ -4,12 +4,13 @@
     {
         static public async Task<string> sendRequest(string hostname, int port, OperTypes path, IDictionary<string, string> args)
         {
+            //проверяем настройки
             if (hostname == null || port == 0)
             {
                 MessageBox.Show("Задайте параметры соединения в настройках!", "Ошибка", MessageBoxButtons.OK);
                 return null;
             }
-
+            //конструктор строки запроса
             string request = $"{path}?";
             foreach (var el in args)
             {

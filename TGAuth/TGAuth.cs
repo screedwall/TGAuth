@@ -2,6 +2,7 @@ namespace TGAuth
 {
     public partial class TGAuth : Form
     {
+        // Настройки клиента
         static public Settings_t settings = new Settings_t();
         public TGAuth()
         {

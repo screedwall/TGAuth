@@ -30,7 +30,7 @@ namespace TGAuth
             ip_tb.Text = TGAuth.settings.ip;
             port_tb.Text = TGAuth.settings.port.ToString();
         }
-
+        //обработчик для кнопки сохранить
         private void save_btn_Click(object sender, EventArgs e)
         {
             TGAuth.settings.ip = ip_tb.Text;
