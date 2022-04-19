@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace TGAuth
 {
@@ -6,14 +7,12 @@ namespace TGAuth
     {
         string username;
         string password;
-        Settings_t settings;
 
-        public WriteToBot(string username, string password, Settings_t settings)
+        public WriteToBot(string username, string password)
         {
             InitializeComponent();
             this.username = username;
             this.password = password;
-            this.settings = settings;
         }
 
         //обработчик нажатия на ссылку
@@ -30,13 +29,14 @@ namespace TGAuth
             request["password"] = password;
             request["telegram_id"] = chatId_tb.Text;
 
-            var res = await Client.sendRequest(settings.ip, settings.port, OperTypes.register, request);
+            var res = await Client.sendRequest(OperTypes.register, request);
 
             //если сервер прислал ответ
             if (res != null)
             {
+                var msg = JsonConvert.DeserializeObject<Msg<Response>>(res);
                 //если статус ответа ок
-                if (res == Response.OK.ToString())
+                if (msg.status == Response.OK)
                 {
                     MessageBox.Show("Пользователь успешно зарегистрирован!", "Успешно", MessageBoxButtons.OK);
                     Close();

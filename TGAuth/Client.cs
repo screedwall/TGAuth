@@ -2,10 +2,10 @@
 {
     public class Client
     {
-        static public async Task<string> sendRequest(string hostname, int port, OperTypes path, IDictionary<string, string> args)
+        static public async Task<string> sendRequest(OperTypes path, IDictionary<string, string> args)
         {
             //проверяем настройки
-            if (hostname == null || port == 0)
+            if (String.IsNullOrEmpty(Settings.settings.ip) || Settings.settings.port == 0)
             {
                 MessageBox.Show("Задайте параметры соединения в настройках!", "Ошибка", MessageBoxButtons.OK);
                 return null;
@@ -21,7 +21,7 @@
             {
                 try
                 {
-                    return await client.GetStringAsync($"http://{hostname}:{port}/{request}");
+                    return await client.GetStringAsync($"http://{Settings.settings.ip}:{Settings.settings.port}/{request}");
                 } catch
                 {
                     MessageBox.Show("Ошибка соединения с сервером", "Ошибка", MessageBoxButtons.OK);

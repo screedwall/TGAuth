@@ -5,7 +5,9 @@
     {
         login,
         register,
-        checkCode
+        checkCode,
+        refreshTokens,
+        ping
     }
 
     //коды ответа

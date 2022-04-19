@@ -1,14 +1,14 @@
-﻿namespace TGAuth
+﻿using Newtonsoft.Json;
+
+namespace TGAuth
 {
     public partial class _2FA : Form
     {
         string username;
-        Settings_t settings;
 
-        public _2FA(string username, Settings_t settings)
+        public _2FA(string username)
         {
             this.username = username;
-            this.settings = settings;
             InitializeComponent();
         }
 
@@ -19,17 +19,20 @@
             request["username"] = username;
             request["code"] = textBox1.Text;
 
-            var res = await Client.sendRequest(settings.ip, settings.port, OperTypes.checkCode, request);
+            var res = await Client.sendRequest(OperTypes.checkCode, request);
 
             //если сервер прислал ответ
             if (res != null)
             {
+                var msg = JsonConvert.DeserializeObject<Msg<Token>>(res);
                 //если статус ответа ок
-                if (res == Response.OK.ToString())
+                if (msg.status == Response.OK)
                 {
+                    Settings.settings.token = msg.data[0];
                     //закрываем форму
                     this.Close();
-                    MessageBox.Show("Вы успешно вошли!", "LogIn", MessageBoxButtons.OK);
+                    Account account = new Account();
+                    account.Show();
                 }
                 else
                 {

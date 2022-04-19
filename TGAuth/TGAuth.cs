@@ -1,9 +1,9 @@
+using Newtonsoft.Json;
+
 namespace TGAuth
 {
     public partial class TGAuth : Form
     {
-        // Ќастройки клиента
-        static public Settings_t settings = new Settings_t();
         public TGAuth()
         {
             InitializeComponent();
@@ -16,15 +16,16 @@ namespace TGAuth
             request["username"] = username_tb.Text;
             request["password"] = password_tb.Text;
 
-            var res = await Client.sendRequest(settings.ip, settings.port, OperTypes.login, request);
+            var res = await Client.sendRequest(OperTypes.login, request);
 
             if (res != null)
             {
+                var msg = JsonConvert.DeserializeObject<Msg<Response>>(res);
                 //если статус ответа ок
-                if (res == Response.OK.ToString())
+                if (msg.status == Response.OK)
                 {
                     //инициализаци€ формы
-                    _2FA twoFactor = new _2FA(username_tb.Text, settings);
+                    _2FA twoFactor = new _2FA(username_tb.Text);
                     twoFactor.Show();
                 }
                 else
@@ -45,7 +46,7 @@ namespace TGAuth
             else
             {
                 //инициализаци€ формы
-                WriteToBot writeToBotForm = new WriteToBot(username_tb.Text, password_tb.Text, settings);
+                WriteToBot writeToBotForm = new WriteToBot(username_tb.Text, password_tb.Text);
                 writeToBotForm.Show();
             }
         }
