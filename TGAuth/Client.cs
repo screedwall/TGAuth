@@ -2,6 +2,7 @@
 {
     public class Client
     {
+        //метод для отправки запроса на сервер
         static public async Task<string> sendRequest(OperTypes path, IDictionary<string, string> args)
         {
             //проверяем настройки
@@ -21,6 +22,7 @@
             {
                 try
                 {
+                    //отправка запроса на сервер
                     return await client.GetStringAsync($"http://{Settings.settings.ip}:{Settings.settings.port}/{request}");
                 } catch
                 {

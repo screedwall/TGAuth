@@ -29,11 +29,13 @@ namespace TGAuth
             request["password"] = password;
             request["telegram_id"] = chatId_tb.Text;
 
+            //Отправка запроса на регистрацию
             var res = await Client.sendRequest(OperTypes.register, request);
 
             //если сервер прислал ответ
             if (res != null)
             {
+                //распаковка сообщения из стоки в объект
                 var msg = JsonConvert.DeserializeObject<Msg<Response>>(res);
                 //если статус ответа ок
                 if (msg.status == Response.OK)

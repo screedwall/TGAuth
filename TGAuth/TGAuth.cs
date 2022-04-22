@@ -15,11 +15,12 @@ namespace TGAuth
             IDictionary<string, string> request = new Dictionary<string, string>();
             request["username"] = username_tb.Text;
             request["password"] = password_tb.Text;
-
+            //отправка запроса на вход
             var res = await Client.sendRequest(OperTypes.login, request);
 
             if (res != null)
             {
+                //распаковка сообщения из стоки в объект
                 var msg = JsonConvert.DeserializeObject<Msg<Response>>(res);
                 //если статус ответа ок
                 if (msg.status == Response.OK)
@@ -50,7 +51,8 @@ namespace TGAuth
                 writeToBotForm.Show();
             }
         }
-
+        
+        //обработчик кнопки "настройки"
         private void settings_btn_Click(object sender, EventArgs e)
         {
             Settings settingsForm = new Settings();
