@@ -70,7 +70,7 @@
             // refresh_tokens_btn
             // 
             this.refresh_tokens_btn.Location = new System.Drawing.Point(67, 324);
-            this.refresh_tokens_btn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.refresh_tokens_btn.Margin = new System.Windows.Forms.Padding(6);
             this.refresh_tokens_btn.Name = "refresh_tokens_btn";
             this.refresh_tokens_btn.Size = new System.Drawing.Size(273, 49);
             this.refresh_tokens_btn.TabIndex = 3;
@@ -81,7 +81,7 @@
             // ping_btn
             // 
             this.ping_btn.Location = new System.Drawing.Point(351, 324);
-            this.ping_btn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.ping_btn.Margin = new System.Windows.Forms.Padding(6);
             this.ping_btn.Name = "ping_btn";
             this.ping_btn.Size = new System.Drawing.Size(292, 49);
             this.ping_btn.TabIndex = 4;
@@ -95,9 +95,9 @@
             this.ping_result_label.Location = new System.Drawing.Point(680, 332);
             this.ping_result_label.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ping_result_label.Name = "ping_result_label";
-            this.ping_result_label.Size = new System.Drawing.Size(54, 32);
+            this.ping_result_label.Size = new System.Drawing.Size(222, 32);
             this.ping_result_label.TabIndex = 5;
-            this.ping_result_label.Text = "Нет";
+            this.ping_result_label.Text = "Не запрашивалось";
             // 
             // successful_login
             // 
@@ -121,7 +121,7 @@
             this.Controls.Add(this.refresh_time_label);
             this.Controls.Add(this.refresh_token_label);
             this.Controls.Add(this.access_token_label);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Account";
             this.Text = "Личный Кабинет";
             this.ResumeLayout(false);

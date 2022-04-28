@@ -65,11 +65,11 @@ namespace TGAuth
                 //если статус ответа ок
                 if (msg.status == Response.OK)
                 {
-                    ping_result_label.Text = "Да";
+                    ping_result_label.Text = "Да " + msg.currentTime;
                 }
                 else
                 {
-                    ping_result_label.Text = "Нет";
+                    ping_result_label.Text = "Нет " + msg.currentTime;
                 }
             }
         }
