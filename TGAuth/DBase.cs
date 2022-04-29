@@ -1,11 +1,10 @@
-﻿using System.Data.SqlClient;
+﻿using System.Data.SqlClient; //чтобы подключиться к БД SQL
 
 namespace TGAuth
 {
     public class DBase
     {
         SqlConnection db_conn;
-
         public DBase()
         {
             //устанавливаем подключение к БД
@@ -21,10 +20,8 @@ namespace TGAuth
             queryCmd.Connection.Open();
             //выполняем запрос
             SqlDataReader reader = queryCmd.ExecuteReader();
-            int count = 0;
             //создаём переменную для ответа
             List<IDictionary<string, string>> response = new List<IDictionary<string, string>>();
-
             //построчно считываем ответ
             while(reader.Read())
             {
@@ -34,11 +31,9 @@ namespace TGAuth
                     el[reader.GetName(i)] = reader[i].ToString();
                 }
                 response.Add(el);
-                count++;
             }
             //закрываем соединение
             queryCmd.Connection.Close();
-
             return response;
         }
 

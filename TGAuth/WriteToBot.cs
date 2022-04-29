@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Data.SqlClient;
+﻿using System.Diagnostics; //чтобы можно было перейти по ссылке
 
 namespace TGAuth
 {
@@ -8,7 +7,6 @@ namespace TGAuth
         string username;
         string password;
         DBase db;
-        Bot bot;
         public WriteToBot(string username, string password, DBase db)
         {
             InitializeComponent();
@@ -16,12 +14,12 @@ namespace TGAuth
             this.password = password;
             this.db = db;
         }
-
+        //обработчик нажатия на ссылку
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://t.me/AmerkhanovaBot") { UseShellExecute = true });
         }
-
+        //обработчик события кнопки "подтвердить"
         private void button1_Click(object sender, EventArgs e)
         {
             //добавление пользователя в таблицу
@@ -29,19 +27,14 @@ namespace TGAuth
                                   "VALUES ('{0}', '{1}', {2})", username, password, chatId_tb.Text));
             //получаем id нового пользователя
             var sqlResponse = db.Select(String.Format("SELECT * FROM users WHERE username='{0}' AND password='{1}'", username, password));
-            int user_id = 0;
-            for (int j = 0; j < sqlResponse.Count; j++)
-            {
-                var row = sqlResponse[j];
-                user_id = Int32.Parse(row["Id"]);
-            }
+            int user_id = Int32.Parse(sqlResponse[0]["Id"]);
             //запоминаем текущее время в формате SQL
             DateTime dateTime = DateTime.Now;
             string sqlFormattedDate = dateTime.ToString("yyyy-MM-ddTHH:mm:ss.fff");
             //добавляем новую запись в таблицу кодов, которую в дальнейшем будем обновлять
             db.Exec(String.Format("INSERT INTO codes (user_id, code, date) " +
                                   "VALUES ({0}, {1}, '{2}')", user_id, 0, sqlFormattedDate));
-            Close();
+            Close();//закрываем форму
         }
     }
 }

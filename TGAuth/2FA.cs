@@ -10,7 +10,7 @@
             this.username = username;
             this.db = db;
         }
-
+        //обработчик события кнопки "проверить"
         private void button1_Click(object sender, EventArgs e)
         {
             if (textBox1.TextLength == 0)
@@ -18,6 +18,7 @@
                 MessageBox.Show("Не заполнен код", "Ошибка", MessageBoxButtons.OK);
                 return;
             }
+            //запрос на поиск кода в БД
             List<IDictionary<string, string>> sqlResponse = db.Select(String.Format("SELECT * " +
                                                               "FROM codes " +
                                                               "INNER JOIN users " +

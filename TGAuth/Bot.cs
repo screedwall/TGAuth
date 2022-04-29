@@ -53,14 +53,8 @@ namespace TGAuth
             }
             queryUser.Connection.Close();
 
-            if (count == 0) {
-                //SqlCommand queryUpdateRegistration = new SqlCommand(String.Format("UPDATE users " +
-                //                                                                  "SET username='{0}', password='{1}', chat_id={2}, registered={3} " +
-                //                                                                  "WHERE id={4}", username, password, chatId, 1, id), db_conn);
-                //queryUpdateRegistration.Connection.Open();
-                //queryUpdateRegistration.ExecuteNonQuery();
-                //queryUpdateRegistration.Connection.Close();
-
+            if (count == 0) 
+            {
                 await SendMessage(botClient, chatId, String.Format("Привет! Держи telegram id для регистрации: {0}", chatId));
             }
         }
